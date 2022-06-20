@@ -1,0 +1,22 @@
+{
+  "name": "solar-viz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesnw/solar-viz.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamesnw/solar-viz/issues"
+  },
+  "homepage": "https://github.com/jamesnw/solar-viz#readme",
+  "dependencies": {
+    "node-fetch": "^3.2.6"
+  }
+}
