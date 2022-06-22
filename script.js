@@ -1,5 +1,5 @@
 const demo = { "envBenefits": { "gasEmissionSaved": { "units": "kg", "co2": 144.7252, "so2": 104.58095, "nox": 33.350616 }, "treesPlanted": 2.4086556, "lightBulbs": 623.8424 } }
-const isDemo = !window?.process?.env?.NETLIFY;
+const isDemo = typeof process === 'undefined';
 
 function fetchEnvBenefits() {
     if (isDemo) {
