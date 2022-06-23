@@ -11,12 +11,12 @@ function fetchEnvBenefits() {
 function makeTrees({treesPlanted}){
     const el = document.getElementById('trees');
     const fullTrees = Math.floor(treesPlanted); 
-    el.innerHTML = Array(fullTrees).join('🌳');
+    el.innerHTML = Array(fullTrees + 1).join('🌳');
 }
 function makeBulbs({lightBulbs}){
     const el = document.getElementById('bulbs');
     const fullBulbs = Math.floor(lightBulbs); 
-    el.innerHTML = Array(fullBulbs).join('💡');
+    el.innerHTML = Array(fullBulbs + 1).join('💡');
 }
 fetchEnvBenefits().then(res=>res.envBenefits).then(res => {
    makeTrees(res);
