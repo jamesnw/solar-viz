@@ -1,13 +1,25 @@
-const fetch = require("node-fetch");
+const nodeFetch = require("node-fetch");
 
-const API_ENDPOINT = `https://monitoringapi.solaredge.com/site/${process.env.SITE}/envBenefits?api_key=${process.env.API_KEY}`;
+/**
+ * 
+ * @param {string} endpoint 
+ * @returns {string}
+ */
+function urlFor(endpoint){
+  return  `https://monitoringapi.solaredge.com/site/${process.env.SITE}/${endpoint}?api_key=${process.env.API_KEY}`;
+}
+
+function fetchEnvBenefits(){
+  return nodeFetch(urlFor('envBenefits'))
+  .then((response) => response.json()) 
+}
 
 exports.handler = async (event, context) => {
-  return fetch(API_ENDPOINT)
-    .then((response) => response.json())
-    .then((data) => ({
-      statusCode: 200,
-      body: JSON.stringify(data),
-    }))
-    .catch((error) => ({ statusCode: 422, body: String(error) }));
+  return Promise.all([fetchEnvBenefits])
+  .then(([envBenefits]) => ({
+    statusCode: 200,
+    body: JSON.stringify(envBenefits),
+  }))
+  .catch((error) => ({ statusCode: 422, body: String(error) }));
 };
+

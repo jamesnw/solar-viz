@@ -1,4 +1,15 @@
-const demo = { "envBenefits": { "gasEmissionSaved": { "units": "kg", "co2": 408.5639, "so2": 295.23538, "nox": 94.149864 }, "treesPlanted": 6.799712400000001, "lightBulbs": 1761.1273 } }
+const demo = {
+    "envBenefits": {
+        "gasEmissionSaved": {
+            "units": "kg",
+            "co2": 408.5639,
+            "so2": 295.23538,
+            "nox": 94.149864
+        },
+        "treesPlanted": 6.799712400000001,
+        "lightBulbs": 1761.1273
+    }
+}
 const isDemo = !window.location.host;
 /**
  * @typedef EnvBenefits
