@@ -1,0 +1,16 @@
+svg.bulbs{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+svg.bulbs rect#cover{
+    fill-opacity: .6;
+    fill: #010e2c;
+}
+body{
+    background: #9999cc;
+    color: #f8c600;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}

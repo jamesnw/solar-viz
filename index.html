@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="What is happening on my roof?">
-    <title>Solar Viz</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div id="container">
-      <h1>Solar Viz</h1>
-      <div id="bulbs"></div>
-      <div id="trees"></div>
-    </div>
-      <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What is happening on my roof?">
+  <title>Solar Viz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="container">
+    <h1>🔅 Solar 🔅</h1>
+    <svg id="bulbs" class="bulbs" xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100%'
+      height='100%' viewPort='0 0 1000 1000'>
+      <!-- put some content in here -->
+      <g id="bulb-group"></g>
+      <rect id="cover" x="0" y="0" width="100%" height="100%"/>
+    </svg>
+    <h2 id="trees"></h2>
+  </div>
+  <script src="script.js"></script>
+</body>
+
 </html>
