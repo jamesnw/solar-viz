@@ -60,7 +60,7 @@ function makeBulbsSvg({ lightBulbs }) {
     const offset = 20;
     const fullRows = rows - 1;
     const remainder = Math.floor(lightBulbs - (fullRows * (columns-1)));
-    console.log({remainder, columns, lightBulbs,rows, fullRows })
+    
     for (let index = 0; index < rows; index++) {
         const text = makeTextElement();
         const bulbsInRow = index === rows - 1 ? remainder + 1 : columns + 1;

@@ -13,16 +13,25 @@ function fetchEnvBenefits(){
   return nodeFetch(urlFor('envBenefits'))
     .then((response) => response.json()) 
 }
+function fetchOverview(){
+  return nodeFetch(urlFor('overview'))
+    .then((response) => response.json()) 
+}
 
 exports.handler = async (event, context) => {
-  return Promise.all([fetchEnvBenefits()])
+  return Promise.all([fetchEnvBenefits(), fetchOverview()])
   .then((values) => {
     console.log(values);
-    const [envBenefits] = values;
+    const [envBenefits, overview] = values;
     const data = {
       envBenefits: {
         treesPlanted: envBenefits.envBenefits.treesPlanted,
         lightBulbs: envBenefits.envBenefits.lightBulbs
+      },
+      overview: {
+        lifeTimeEnergy: overview.overview.lifeTimeData.energy,
+        currentPower: overview.overview.currentPower.power,
+
       }
     }
     return {
