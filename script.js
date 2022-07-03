@@ -8,14 +8,20 @@ const isDemo = !window.location.host;
  * @property {number} treesPlanted
  */
 /**
- * @typedef EnvBenefitsResult
- * @property {EnvBenefits} envBenefits
+ * @typedef Overview
+ * @property {number} lifeTimeEnergy
+ * @property {number} currentPower
  */
 /**
- * fetchEnvBenefits
- * @returns {Promise<EnvBenefitsResult>}
+ * @typedef SolarResult
+ * @property {EnvBenefits} envBenefits
+ * @property {Overview} overview
  */
-function fetchEnvBenefits() {
+/**
+ * fetchSolar
+ * @returns {Promise<SolarResult>}
+ */
+function fetchSolar() {
     if (isDemo) {
         return Promise.resolve(demo);
     } else {
@@ -62,10 +68,22 @@ function makeBulbsSvg({ lightBulbs }) {
     }
 
 }
-fetchEnvBenefits().then(res => res.envBenefits).then(res => {
-    makeTrees(res);
-    // makeBulbs(res);
-    makeBulbsSvg(res);
+/**
+ * makeOverview
+ * @param {Overview} overview
+ */
+function makeOverview(overview){
+    const lifetimeEl = document.getElementById('lifetime-value')
+    const currentEl = document.getElementById('current-value')
+
+    lifetimeEl.innerText = overview.lifeTimeEnergy.toString();
+    currentEl.innerText = overview.currentPower.toString();
+}
+
+fetchSolar().then(res => {
+    makeTrees(res.envBenefits);
+    makeBulbsSvg(res.envBenefits);
+    makeOverview(res.overview)
 })
 /**
  * makeTextElement
