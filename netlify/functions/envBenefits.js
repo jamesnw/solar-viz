@@ -16,9 +16,9 @@ function fetchEnvBenefits(){
 
 exports.handler = async (event, context) => {
   return Promise.all([fetchEnvBenefits])
-  .then(([envBenefits]) => ({
+  .then((values) => ({
     statusCode: 200,
-    body: JSON.stringify(envBenefits),
+    body: JSON.stringify(values),
   }))
   .catch((error) => ({ statusCode: 422, body: String(error) }));
 };
