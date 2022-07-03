@@ -16,10 +16,18 @@ function fetchEnvBenefits(){
 
 exports.handler = async (event, context) => {
   return Promise.all([fetchEnvBenefits()])
-  .then((values) => ({
-    statusCode: 200,
-    body: JSON.stringify(values),
-  }))
+  .then(([envBenefits]) => {
+    const data = {
+      envBenefits: {
+        treesPlanted: envBenefits.treesPlanted,
+        lightBulbs: envBenefits.lightBulbs
+      }
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    }
+  })
   .catch((error) => ({ statusCode: 422, body: String(error) }));
 };
 
