@@ -16,11 +16,13 @@ function fetchEnvBenefits(){
 
 exports.handler = async (event, context) => {
   return Promise.all([fetchEnvBenefits()])
-  .then(([envBenefits]) => {
+  .then((values) => {
+    console.log(values);
+    const [envBenefits] = values;
     const data = {
       envBenefits: {
-        treesPlanted: envBenefits.treesPlanted,
-        lightBulbs: envBenefits.lightBulbs
+        treesPlanted: envBenefits.envBenefits.treesPlanted,
+        lightBulbs: envBenefits.envBenefits.lightBulbs
       }
     }
     return {
