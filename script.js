@@ -1,14 +1,5 @@
 const demo = {
-    "envBenefits": {
-        "gasEmissionSaved": {
-            "units": "kg",
-            "co2": 408.5639,
-            "so2": 295.23538,
-            "nox": 94.149864
-        },
-        "treesPlanted": 6.799712400000001,
-        "lightBulbs": 1761.1273
-    }
+    "envBenefits": { "treesPlanted": 7.3393749, "lightBulbs": 1900.9 }, "overview": { "lifeTimeEnergy": 627297, "currentPower": 16.84185 }
 }
 const isDemo = !window.location.host;
 /**
@@ -28,7 +19,7 @@ function fetchEnvBenefits() {
     if (isDemo) {
         return Promise.resolve(demo);
     } else {
-        return fetch('.netlify/functions/envBenefits').then(res => res.json());
+        return fetch('.netlify/functions/solar').then(res => res.json());
     }
 }
 /**
@@ -59,17 +50,17 @@ function makeBulbsSvg({ lightBulbs }) {
 
     const offset = 20;
     const fullRows = rows - 1;
-    const remainder = Math.floor(lightBulbs - (fullRows * (columns-1)));
-    
+    const remainder = Math.floor(lightBulbs - (fullRows * (columns - 1)));
+
     for (let index = 0; index < rows; index++) {
         const text = makeTextElement();
         const bulbsInRow = index === rows - 1 ? remainder + 1 : columns + 1;
         text.textContent = Array(bulbsInRow).join('💡');
         const y = offset * index + 15;
-        text.setAttribute('y',y.toString())
+        text.setAttribute('y', y.toString())
         bulbGroup.appendChild(text);
     }
-   
+
 }
 fetchEnvBenefits().then(res => res.envBenefits).then(res => {
     makeTrees(res);

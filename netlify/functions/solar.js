@@ -11,7 +11,7 @@ function urlFor(endpoint){
 
 function fetchEnvBenefits(){
   return nodeFetch(urlFor('envBenefits'))
-    .then((response) => response.json()) 
+    .then((response) => response.json())
 }
 function fetchOverview(){
   return nodeFetch(urlFor('overview'))
