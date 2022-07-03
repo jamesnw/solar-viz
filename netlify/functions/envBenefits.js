@@ -11,11 +11,11 @@ function urlFor(endpoint){
 
 function fetchEnvBenefits(){
   return nodeFetch(urlFor('envBenefits'))
-  .then((response) => response.json()) 
+    .then((response) => response.json()) 
 }
 
 exports.handler = async (event, context) => {
-  return Promise.all([fetchEnvBenefits])
+  return Promise.all([fetchEnvBenefits()])
   .then((values) => ({
     statusCode: 200,
     body: JSON.stringify(values),
