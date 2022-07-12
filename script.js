@@ -29,13 +29,49 @@ function fetchSolar() {
     }
 }
 /**
+ * makeTreesText
+ * @param {EnvBenefits} envBenefits 
+ */
+function makeTreesText({ treesPlanted }) {
+    const el = document.getElementById('treesText');
+    const fullTrees = Math.floor(treesPlanted);
+    el.innerText = Array(fullTrees + 1).join('🌳');
+}
+/**
+ * makeTree
+ * @returns { SVGGElement }
+ */
+function makeTree() {
+    const treePatterns = ['tree1', 'tree2', 'tree3'];
+    const patternId = treePatterns[Math.floor(Math.random() * treePatterns.length)]
+    const pattern = document.getElementById(patternId);
+    const tree = pattern.children[0];
+    return tree.cloneNode(true);
+}
+/**
+ * 
+ * @param {number} min 
+ * @param {number} max 
+ * @returns 
+ */
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+/**
  * makeTrees
  * @param {EnvBenefits} envBenefits 
  */
 function makeTrees({ treesPlanted }) {
     const el = document.getElementById('trees');
     const fullTrees = Math.floor(treesPlanted);
-    el.innerText = Array(fullTrees + 1).join('🌳');
+    for (let index = 0; index < fullTrees; index++) {
+        const newTree = makeTree();
+        const x = randomIntFromInterval(20,980);
+        const y = randomIntFromInterval(200,600);
+        const scale = .5;
+        newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale} ${scale})`)
+        el.appendChild(newTree)
+    }
 }
 /**
  * makeBulbsSvg
@@ -72,17 +108,19 @@ function makeBulbsSvg({ lightBulbs }) {
  * makeOverview
  * @param {Overview} overview
  */
-function makeOverview(overview){
-    const lifetimeEl = document.getElementById('lifetime-value')
-    const currentEl = document.getElementById('current-value')
+function makeOverview({ lifeTimeEnergy, currentPower }) {
+    const lifetimeEl = document.getElementById('lifetime-value');
+    const currentEl = document.getElementById('current-value');
 
-    lifetimeEl.innerText = overview.lifeTimeEnergy.toString();
-    currentEl.innerText = overview.currentPower.toString();
+    const lifetimeDisplay = (lifeTimeEnergy / 1000).toString() + 'kWh';
+
+    lifetimeEl.innerText = lifetimeDisplay;
+    currentEl.innerText = currentPower.toString() + 'W';
 }
 
 fetchSolar().then(res => {
     makeTrees(res.envBenefits);
-    makeBulbsSvg(res.envBenefits);
+    // makeBulbsSvg(res.envBenefits);
     makeOverview(res.overview)
 })
 /**

@@ -1,16 +1,23 @@
-svg.bulbs{
-    position: absolute;
-    top: 0;
-    left: 0;
+svg#landscape{
     z-index: -1;
+    border: 10pt solid white;
 }
-svg.bulbs rect#cover{
+svg#landscape rect#sky{
     fill-opacity: .6;
-    fill: #010e2c;
+    fill: #577bcf;
+}
+svg path.trunk{
+    fill: #4e270a;
+}
+svg path.leaves{
+    fill: #24A148;
+}
+#hill path{
+    fill: #81d17d;
 }
 body{
-    background: #9999cc;
-    color: #f8c600;
+    background: #ececff;
+    color: #4e270a;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
     margin: 0px;
