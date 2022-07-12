@@ -1,6 +1,7 @@
 svg#landscape{
     z-index: -1;
     border: 10pt solid white;
+    max-width: 75%;
 }
 svg#landscape rect#sky{
     fill-opacity: .6;

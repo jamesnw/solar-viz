@@ -63,15 +63,21 @@ function randomIntFromInterval(min, max) {
  */
 function makeTrees({ treesPlanted }) {
     const el = document.getElementById('trees');
-    const fullTrees = Math.floor(treesPlanted);
-    for (let index = 0; index < fullTrees; index++) {
+    const fullTreeCount = Math.floor(treesPlanted);
+    let fullTrees = [];
+    for (let index = 0; index < fullTreeCount; index++) {
         const newTree = makeTree();
         const x = randomIntFromInterval(20,980);
         const y = randomIntFromInterval(200,600);
         const scale = .5;
         newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale} ${scale})`)
-        el.appendChild(newTree)
+        newTree.setAttribute('data-y', `${y}`)
+        fullTrees.push(newTree)
     }
+    fullTrees = fullTrees.sort((a,b)=>{
+        return parseInt(a.dataset.y) - parseInt(b.dataset.y)
+    })
+    fullTrees.forEach(t=>el.appendChild(t))
 }
 /**
  * makeBulbsSvg
