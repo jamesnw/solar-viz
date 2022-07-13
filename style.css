@@ -1,25 +1,39 @@
-svg#landscape{
+svg#landscape {
     z-index: -1;
     border: 10pt solid white;
-    max-width: 75%;
+    max-width: 65%;
+    max-height: 75vh;
+    margin-top: 4em;
 }
-svg#landscape rect#sky{
+
+svg#landscape rect#sky {
     fill-opacity: .6;
     fill: #577bcf;
 }
-svg path.trunk{
+
+svg path.trunk {
     fill: #4e270a;
 }
-svg path.leaves{
+
+svg path.leaves {
     fill: #24A148;
 }
-#hill path{
+
+#hill path {
     fill: #81d17d;
 }
-body{
+
+body {
     background: #ececff;
     color: #4e270a;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
     margin: 0px;
+}
+
+#energy-card {
+    background: white;
+    display: inline-block;
+    padding: 10pt;
+    margin-right: -40%;
 }

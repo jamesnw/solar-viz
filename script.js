@@ -70,14 +70,19 @@ function makeTrees({ treesPlanted }) {
         const x = randomIntFromInterval(20,980);
         const y = randomIntFromInterval(200,600);
         const scale = .5;
-        newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale} ${scale})`)
+        newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale})`)
+        // newTree.getElementsByClassName('translate')[0].setAttribute('transform', `translate(${x}, ${y})`)
         newTree.setAttribute('data-y', `${y}`)
         fullTrees.push(newTree)
     }
     fullTrees = fullTrees.sort((a,b)=>{
         return parseInt(a.dataset.y) - parseInt(b.dataset.y)
     })
-    fullTrees.forEach(t=>el.appendChild(t))
+    const totalLength = 2000;
+    const delayForEach = totalLength / fullTrees.length;
+    fullTrees.forEach((t, index)=>{
+        setTimeout(()=>el.appendChild(t), delayForEach * index)
+    });
 }
 /**
  * makeBulbsSvg
