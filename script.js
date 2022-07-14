@@ -1,7 +1,4 @@
-const demo = {
-    "envBenefits": { "treesPlanted": 7.3393749, "lightBulbs": 1900.9 }, "overview": { "lifeTimeEnergy": 627297, "currentPower": 160.84185 },
-    "details": {"peakPower": 6.8, "timeZone": "America/Indiana/Indianapolis"}
-}
+const demo ={"envBenefits":{"treesPlanted":12.1290975,"lightBulbs":3141.4395},"overview":{"lifeTimeEnergy":1036675,"currentPower":5668.793},"details":{"peakPower":6.8}}
 const isDemo = !window.location.host;
 /**
  * @typedef EnvBenefits
@@ -145,7 +142,7 @@ function makeOverview({ lifeTimeEnergy, currentPower }) {
  */
 function moveSun({overview, details}){
     const full = -425;
-    const percentPower = overview.currentPower / details.peakPower / 100;
+    const percentPower = overview.currentPower / (details.peakPower * 1000);
     const distance = full * percentPower;
     const sunPath = document.getElementById('sunPath');
     sunPath.setAttribute('transform', `translate(0,${distance})`);
