@@ -15,7 +15,7 @@ svg#landscape g#sun{
     transform: translateX(191px) translateY(259px) scale(0.6);
 }
 svg#landscape g#sun path#sunPath{
-    transition: transform 1s ease-in;
+    transition: transform 1s ease-out;
 }
 .loading svg#landscape g#sun path#sunPath{
     transform: translate(0, 0);
@@ -30,6 +30,14 @@ svg path.leaves {
 
 #hill path {
     fill: #81d17d;
+}
+#dusk{
+    height: 100%;
+    width: 100%;
+    fill: #002f5b;
+    mix-blend-mode: multiply;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
 }
 
 body {

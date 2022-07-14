@@ -1,4 +1,4 @@
-const demo ={"envBenefits":{"treesPlanted":12.1290975,"lightBulbs":3141.4395},"overview":{"lifeTimeEnergy":1036675,"currentPower":5668.793},"details":{"peakPower":6.8}}
+const demo ={"envBenefits":{"treesPlanted":12.1290975,"lightBulbs":3141.4395},"overview":{"lifeTimeEnergy":1036675,"currentPower":2668.793},"details":{"peakPower":6.8}}
 const isDemo = !window.location.host;
 /**
  * @typedef EnvBenefits
@@ -146,6 +146,9 @@ function moveSun({overview, details}){
     const distance = full * percentPower;
     const sunPath = document.getElementById('sunPath');
     sunPath.setAttribute('transform', `translate(0,${distance})`);
+
+    const duskRect =  document.getElementById('dusk');
+    duskRect.setAttribute('style', `opacity:${1-percentPower}`)
 }
 
 fetchSolar().then(res => {
