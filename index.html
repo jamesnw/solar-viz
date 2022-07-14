@@ -9,13 +9,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="loading">
   <div id="container">
     <svg id="landscape" class="bulbs" xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 1000 800'>
       <defs>
         <!-- Tree shapes from https://www.blobmaker.app/ -->
         <!-- Trunks built at https://yqnn.github.io/svg-path-editor/ -->
-        <pattern id="tree1" width="1" height="1">
+        <pattern id="tree1">
           <g>
             <path class="trunk"
               d="M 70 40 C 66.667 63.333 70 90 62.73 110.4 C 56.51 117 53.333 116.667 52.74 120.58 C 66.667 120 83.333 120 100 120 C 96.667 116.667 91.94 115.68 90 110 C 87.0667 86.6433 80.63 62.73 81.2 39.93 Z"
@@ -48,6 +48,8 @@
       </defs>
       <g id="bulb-group"></g>
       <rect id="sky" x="0" y="0" width="100%" height="100%" />
+      <!-- Sun path from https://stackblitz.com/edit/svg-star-generator -->
+      <g id="sun"><path id="sunPath" d="M200,20,236,75,297,48,298,114,363,125,328,181,378,225,318,254,336,317,270,309,250,372,200,330,149,372,129,309,63,317,81,254,21,225,71,181,36,125,101,114,102,48,163,75Z"></path></g>
       <g id="hill" style="transform: translate(0px, 150px);">
         <path fill-opacity="1"
           d="M0,32L60,53.3C120,75,240,117,360,122.7C480,128,600,96,720,74.7C840,53,960,43,1080,58.7C1200,75,1650,117,1380,138.7L1440,160L1440,650L1380,650C1650,650,1200,650,1080,650C960,650,840,650,720,650C600,650,480,650,360,650C240,650,120,650,60,650L0,650Z">

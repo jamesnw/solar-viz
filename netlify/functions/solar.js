@@ -17,12 +17,16 @@ function fetchOverview(){
   return nodeFetch(urlFor('overview'))
     .then((response) => response.json()) 
 }
+function fetchDetails(){
+  return nodeFetch(urlFor('details'))
+    .then((response) => response.json()) 
+}
 
 exports.handler = async (event, context) => {
-  return Promise.all([fetchEnvBenefits(), fetchOverview()])
+  return Promise.all([fetchEnvBenefits(), fetchOverview(), fetchDetails()])
   .then((values) => {
     console.log(values);
-    const [envBenefits, overview] = values;
+    const [envBenefits, overview, details] = values;
     const data = {
       envBenefits: {
         treesPlanted: envBenefits.envBenefits.treesPlanted,
@@ -31,7 +35,10 @@ exports.handler = async (event, context) => {
       overview: {
         lifeTimeEnergy: overview.overview.lifeTimeData.energy,
         currentPower: overview.overview.currentPower.power,
-
+      },
+      details: {
+        peakPower: details.details.peakPower,
+        timeZone: details.details.timeZone
       }
     }
     return {

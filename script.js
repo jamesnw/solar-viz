@@ -1,5 +1,6 @@
 const demo = {
-    "envBenefits": { "treesPlanted": 7.3393749, "lightBulbs": 1900.9 }, "overview": { "lifeTimeEnergy": 627297, "currentPower": 16.84185 }
+    "envBenefits": { "treesPlanted": 7.3393749, "lightBulbs": 1900.9 }, "overview": { "lifeTimeEnergy": 627297, "currentPower": 160.84185 },
+    "details": {"peakPower": 6.8, "timeZone": "America/Indiana/Indianapolis"}
 }
 const isDemo = !window.location.host;
 /**
@@ -13,9 +14,15 @@ const isDemo = !window.location.host;
  * @property {number} currentPower
  */
 /**
+ * @typedef Details
+ * @property {number} peakPower
+ * @property {string} timeZone
+ */
+/**
  * @typedef SolarResult
  * @property {EnvBenefits} envBenefits
  * @property {Overview} overview
+ * @property {Details} details
  */
 /**
  * fetchSolar
@@ -23,7 +30,11 @@ const isDemo = !window.location.host;
  */
 function fetchSolar() {
     if (isDemo) {
-        return Promise.resolve(demo);
+        return new Promise(resolve=>{
+            setTimeout(()=>{
+               resolve(demo);
+            }, 500)
+        });
     } else {
         return fetch('.netlify/functions/solar').then(res => res.json());
     }
@@ -128,11 +139,24 @@ function makeOverview({ lifeTimeEnergy, currentPower }) {
     lifetimeEl.innerText = lifetimeDisplay;
     currentEl.innerText = currentPower.toString() + 'W';
 }
+/**
+ * moveSun
+ * @param {SolarResult} result 
+ */
+function moveSun({overview, details}){
+    const full = -425;
+    const percentPower = overview.currentPower / details.peakPower / 100;
+    const distance = full * percentPower;
+    const sunPath = document.getElementById('sunPath');
+    sunPath.setAttribute('transform', `translate(0,${distance})`);
+}
 
 fetchSolar().then(res => {
     makeTrees(res.envBenefits);
     // makeBulbsSvg(res.envBenefits);
-    makeOverview(res.overview)
+    makeOverview(res.overview);
+    moveSun(res);
+    document.getElementsByTagName('body')[0].setAttribute('class', 'loaded');
 })
 /**
  * makeTextElement

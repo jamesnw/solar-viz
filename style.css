@@ -10,7 +10,16 @@ svg#landscape rect#sky {
     fill-opacity: .6;
     fill: #577bcf;
 }
-
+svg#landscape g#sun{
+    fill: #ffd942;
+    transform: translateX(191px) translateY(259px) scale(0.6);
+}
+svg#landscape g#sun path#sunPath{
+    transition: transform 1s ease-in;
+}
+.loading svg#landscape g#sun path#sunPath{
+    transform: translate(0, 0);
+}
 svg path.trunk {
     fill: #4e270a;
 }
