@@ -8,28 +8,52 @@ svg#landscape {
 
 svg#landscape rect#sky {
     fill-opacity: .6;
-    fill: #577bcf;
+    fill: url(#skyGradient);
+}
+#skyGradient .stop1{
+    stop-color: #577bcf;
+}
+#skyGradient .stop2{
+    stop-color: #2a3592;
 }
 svg#landscape g#sun{
-    fill: #ffd942;
     transform: translateX(191px) translateY(259px) scale(0.6);
 }
-svg#landscape g#sun path#sunPath{
+svg#landscape g#sun g#sunPath{
     transition: transform 1s ease-out;
 }
-.loading svg#landscape g#sun path#sunPath{
+.loading svg#landscape g#sun g#sunPath{
     transform: translate(0, 0);
 }
+path#sunPathInner{
+    fill: #ffd942;
+    transform: scale(0.95) translate(22px, 3px)
+}
+path#sunPathOuter{
+    fill: #ff9d42;
+}
+
 svg path.trunk {
     fill: #4e270a;
 }
 
 svg path.leaves {
-    fill: #24A148;
+    fill: url('#treeGradient');
 }
-
+#treeGradient .stop2{
+    stop-color: #24A148;
+}
+#treeGradient .stop1{
+    stop-color: #0db43d;
+}
 #hill path {
-    fill: #81d17d;
+    fill: url('#hillGradient');
+}
+#hillGradient .stop2{
+    stop-color: #64bc5f;
+}
+#hillGradient .stop1{
+    stop-color: #81d17d;
 }
 #dusk{
     height: 100%;
@@ -38,6 +62,9 @@ svg path.leaves {
     mix-blend-mode: multiply;
     opacity: 1;
     transition: opacity 1s ease-in-out;
+}
+.loaded #dusk{
+    opacity: 0;
 }
 
 body {

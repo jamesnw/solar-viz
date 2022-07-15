@@ -1,4 +1,4 @@
-const demo ={"envBenefits":{"treesPlanted":12.1290975,"lightBulbs":3141.4395},"overview":{"lifeTimeEnergy":1036675,"currentPower":2668.793},"details":{"peakPower":6.8}}
+const demo = { "envBenefits": { "treesPlanted": 12.1290975, "lightBulbs": 3141.4395 }, "overview": { "lifeTimeEnergy": 1036675, "currentPower": 5668.793 }, "details": { "peakPower": 6.8 } }
 const isDemo = !window.location.host;
 /**
  * @typedef EnvBenefits
@@ -27,9 +27,9 @@ const isDemo = !window.location.host;
  */
 function fetchSolar() {
     if (isDemo) {
-        return new Promise(resolve=>{
-            setTimeout(()=>{
-               resolve(demo);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(demo);
             }, 500)
         });
     } else {
@@ -64,7 +64,7 @@ function makeTree() {
  */
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+}
 /**
  * makeTrees
  * @param {EnvBenefits} envBenefits 
@@ -75,21 +75,21 @@ function makeTrees({ treesPlanted }) {
     let fullTrees = [];
     for (let index = 0; index < fullTreeCount; index++) {
         const newTree = makeTree();
-        const x = randomIntFromInterval(20,980);
-        const y = randomIntFromInterval(200,600);
+        const x = randomIntFromInterval(-25, 975);
+        const y = randomIntFromInterval(180, 725);
         const scale = .5;
         newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale})`)
         // newTree.getElementsByClassName('translate')[0].setAttribute('transform', `translate(${x}, ${y})`)
         newTree.setAttribute('data-y', `${y}`)
         fullTrees.push(newTree)
     }
-    fullTrees = fullTrees.sort((a,b)=>{
+    fullTrees = fullTrees.sort((a, b) => {
         return parseInt(a.dataset.y) - parseInt(b.dataset.y)
     })
     const totalLength = 2000;
     const delayForEach = totalLength / fullTrees.length;
-    fullTrees.forEach((t, index)=>{
-        setTimeout(()=>el.appendChild(t), delayForEach * index)
+    fullTrees.forEach((t, index) => {
+        setTimeout(() => el.appendChild(t), delayForEach * index)
     });
 }
 /**
@@ -140,24 +140,23 @@ function makeOverview({ lifeTimeEnergy, currentPower }) {
  * moveSun
  * @param {SolarResult} result 
  */
-function moveSun({overview, details}){
+function moveSun({ overview, details }) {
     const full = -425;
     const percentPower = overview.currentPower / (details.peakPower * 1000);
     const distance = full * percentPower;
     const sunPath = document.getElementById('sunPath');
     sunPath.setAttribute('transform', `translate(0,${distance})`);
-
-    const duskRect =  document.getElementById('dusk');
-    duskRect.setAttribute('style', `opacity:${1-percentPower}`)
 }
 
-fetchSolar().then(res => {
-    makeTrees(res.envBenefits);
-    // makeBulbsSvg(res.envBenefits);
-    makeOverview(res.overview);
-    moveSun(res);
-    document.getElementsByTagName('body')[0].setAttribute('class', 'loaded');
-})
+document.addEventListener("DOMContentLoaded", function (event) {
+    fetchSolar().then(res => {
+        makeTrees(res.envBenefits);
+        // makeBulbsSvg(res.envBenefits);
+        makeOverview(res.overview);
+        moveSun(res);
+        document.getElementsByTagName('body')[0].setAttribute('class', 'loaded');
+    })
+});
 /**
  * makeTextElement
  * @returns {SVGTextElement}
