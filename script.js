@@ -75,8 +75,8 @@ function makeTrees({ treesPlanted }) {
     let fullTrees = [];
     for (let index = 0; index < fullTreeCount; index++) {
         const newTree = makeTree();
-        const x = randomIntFromInterval(-25, 975);
-        const y = randomIntFromInterval(180, 725);
+        const x = randomIntFromInterval(-25, 950);
+        const y = randomIntFromInterval(180, 700);
         const scale = .5;
         newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale})`)
         // newTree.getElementsByClassName('translate')[0].setAttribute('transform', `translate(${x}, ${y})`)
@@ -141,7 +141,7 @@ function makeOverview({ lifeTimeEnergy, currentPower }) {
  * @param {SolarResult} result 
  */
 function moveSun({ overview, details }) {
-    const full = -425;
+    const full = -250;
     const percentPower = overview.currentPower / (details.peakPower * 1000);
     const distance = full * percentPower;
     const sunPath = document.getElementById('sunPath');
