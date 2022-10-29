@@ -1,5 +1,6 @@
-const demo = { "envBenefits": { "treesPlanted": 12.1290975, "lightBulbs": 3141.4395 }, "overview": { "lifeTimeEnergy": 1036675, "currentPower": 5668.793 }, "details": { "peakPower": 6.8 } }
-const isDemo = !window.location.host;
+let fullResult = {};
+const demo = () => ({ "envBenefits": { "treesPlanted": 12.1290975, "lightBulbs": 3141.4395 }, "overview": { "lifeTimeEnergy": 1036675, "currentPower": Math.random()*6000 }, "details": { "peakPower": 6.8 } })
+const isDemo = false;
 /**
  * @typedef EnvBenefits
  * @property {number} lightBulbs
@@ -29,12 +30,16 @@ function fetchSolar() {
     if (isDemo) {
         return new Promise(resolve => {
             setTimeout(() => {
-                resolve(demo);
+                resolve(demo());
             }, 500)
         });
     } else {
-        return fetch('.netlify/functions/solar').then(res => res.json());
+        return fetch('.netlify/functions/solar?all=true').then(res => res.json());
     }
+}
+
+function fetchCurrentPower(){
+    return fetch('.netlify/functions/solar').then(res => res.json());
 }
 /**
  * makeTreesText
@@ -147,15 +152,26 @@ function moveSun({ overview, details }) {
     const sunPath = document.getElementById('sunPath');
     sunPath.setAttribute('transform', `translate(0,${distance})`);
 }
-
-document.addEventListener("DOMContentLoaded", function (event) {
+function draw(){
     fetchSolar().then(res => {
+        fullResult = res;
         makeTrees(res.envBenefits);
         // makeBulbsSvg(res.envBenefits);
         makeOverview(res.overview);
         moveSun(res);
         document.getElementsByTagName('body')[0].setAttribute('class', 'loaded');
     })
+}
+
+function drawRefresh(){
+    fetchCurrentPower().then(({overview})=>{
+        moveSun({details: fullResult.details, envBenefits: fullResult.envBenefits, overview});
+        makeOverview(overview)
+    });
+}
+document.addEventListener("DOMContentLoaded", function (event) {
+    draw();
+    setInterval(drawRefresh, 30000)
 });
 /**
  * makeTextElement

@@ -23,29 +23,46 @@ function fetchDetails(){
 }
 
 exports.handler = async (event, context) => {
-  return Promise.all([fetchEnvBenefits(), fetchOverview(), fetchDetails()])
-  .then((values) => {
-    console.log(values);
-    const [envBenefits, overview, details] = values;
-    const data = {
-      envBenefits: {
-        treesPlanted: envBenefits.envBenefits.treesPlanted,
-        lightBulbs: envBenefits.envBenefits.lightBulbs
-      },
-      overview: {
-        lifeTimeEnergy: overview.overview.lifeTimeData.energy,
-        currentPower: overview.overview.currentPower.power,
-      },
-      details: {
-        peakPower: details.details.peakPower,
-        timeZone: details.details.timeZone
+  if(event.queryStringParameters?.all){
+    return Promise.all([fetchEnvBenefits(), fetchOverview(), fetchDetails()])
+    .then((values) => {
+      const [envBenefits, overview, details] = values;
+      const data = {
+        envBenefits: {
+          treesPlanted: envBenefits.envBenefits.treesPlanted,
+          lightBulbs: envBenefits.envBenefits.lightBulbs
+        },
+        overview: {
+          lifeTimeEnergy: overview.overview.lifeTimeData.energy,
+          currentPower: overview.overview.currentPower.power,
+        },
+        details: {
+          peakPower: details.details.peakPower,
+          timeZone: details.details.timeZone
+        }
       }
-    }
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
-    }
-  })
-  .catch((error) => ({ statusCode: 422, body: String(error) }));
+      return {
+        statusCode: 200,
+        body: JSON.stringify(data),
+      }
+    })
+    .catch((error) => ({ statusCode: 422, body: String(error) }));
+  } else {
+    return fetchOverview()
+      .then(overview=>{
+        const data = {
+          overview: {
+            lifeTimeEnergy: overview.overview.lifeTimeData.energy,
+            currentPower: overview.overview.currentPower.power,
+          }
+        }
+        return {
+          statusCode: 200,
+          body: JSON.stringify(data),
+        }
+      })
+      .catch((error) => ({ statusCode: 422, body: String(error) }));
+  }
+ 
 };
 
