@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="loading">
+<body class="loading spring">
   <div id="container">
     <svg id="landscape" class="bulbs" xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
       viewBox='0 0 1000 800'>
@@ -50,11 +50,14 @@
       <g id="trees"></g>
       <rect id="dusk"></rect>
     </svg>
-    <h2 id="treesText"></h2>
     <div id="energy-card">
-      <div id="lifetime">Lifetime: <span id="lifetime-value">-</span></div>
-      <div id="current">Current: <span id="current-value">-</span></div>
+      <div id="lifetime"><strong>Lifetime: </strong><span id="lifetime-value">-</span></div>
+      <div id="current"><strong>Current: </strong><span id="current-value">-</span></div>
     </div>
+    <button id="season-change">
+      <span id="to-fall">To fall</span>
+      <span id="to-spring">To spring</span>
+    </button>
   </div>
   <script src="script.js"></script>
 </body>
