@@ -53,6 +53,12 @@ svg path.leaves {
 #hillGradient .stop1{
     stop-color: #ccf5ca;
 }
+.fall #hillGradient .stop2{
+    stop-color: #ffec96;
+}
+.fall #hillGradient .stop1{
+    stop-color: #ccf5ca;
+}
 #dusk{
     height: 100%;
     width: 100%;
@@ -92,4 +98,7 @@ body {
 #season-change{
     position: absolute;
     right: 0;
+}
+.fall .deciduous.leaves{
+    stroke: red;
 }

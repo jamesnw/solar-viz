@@ -51,6 +51,14 @@
         const fullTrees = Math.floor(treesPlanted);
         el.innerText = Array(fullTrees + 1).join('🌳');
     }
+    function inlineTrees(){
+        const treePatterns = ['tree1', 'tree2', 'tree3'];
+        treePatterns.forEach(tree=>{
+            fetch(`assets/${tree}.svg`).then(res=>res.text()).then(res=>{
+                document.getElementById(tree).innerHTML = `<g>${res}</g>`;
+            });
+        })
+    }
     /**
      * makeTree
      * @returns { SVGGElement }
@@ -160,18 +168,19 @@
             // makeBulbsSvg(res.envBenefits);
             makeOverview(res.overview);
             moveSun(res);
-            document.body.classList.add('loaded');
-            document.body.classList.remove('loading');
+            document.body.classList.replace('loading', 'loaded');
         })
     }
 
     function drawRefresh() {
+        if(!document.hasFocus()) return;
         fetchCurrentPower().then(({ overview }) => {
             moveSun({ details: fullResult.details, envBenefits: fullResult.envBenefits, overview });
             makeOverview(overview)
         });
     }
     document.addEventListener("DOMContentLoaded", function (event) {
+        inlineTrees();
         draw();
         setInterval(drawRefresh, 30000)
     });
@@ -184,4 +193,9 @@
         text.setAttribute('letter-spacing', '4px')
         return text;
     }
+    const seasonChangeButton = document.getElementById('season-change');
+    seasonChangeButton.addEventListener('click', ()=>{
+        const [toggleTo, toggleFrom] = document.body.classList.contains('spring') ? ['fall', 'spring'] : ['spring', 'fall'];
+        document.body.classList.replace(toggleFrom, toggleTo);
+    })
 })()
