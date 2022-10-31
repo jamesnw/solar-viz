@@ -47,10 +47,13 @@ svg path.leaves {
     stroke: #000000;
     stroke-width: 2;
 }
-#hillGradient .stop2{
+#hillGradient .stop{
+    transition: stop-color .5s ease-in-out;
+}
+.spring #hillGradient .stop2{
     stop-color: #a0f49c;
 }
-#hillGradient .stop1{
+.spring #hillGradient .stop1{
     stop-color: #ccf5ca;
 }
 .fall #hillGradient .stop2{
@@ -79,6 +82,12 @@ body {
     margin: 0px;
 }
 
+#container{
+    aspect-ratio: 5/4;
+    max-height: 100vh;
+    margin: 0 auto;
+}
+
 #energy-card {
     background: rgba(255,255,255,0.7);
     padding: 0.5rem;
@@ -98,6 +107,9 @@ body {
 #season-change{
     position: absolute;
     right: 0;
+}
+.leaves{
+    transition: stroke .5s ease-in-out;
 }
 .fall .deciduous.leaves{
     stroke: red;
