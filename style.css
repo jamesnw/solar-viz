@@ -38,11 +38,11 @@ svg path.leaves {
     stop-color: #0db43d;
 }
 #hill{
-    transform: translate(-1px, 151px);
+    transform: translate(0px, 270px);
     stroke: #000000;
     stroke-width: 2;
 }
-#hill path {
+#hill rect {
     fill: url('#hillGradient');
     stroke: #000000;
     stroke-width: 2;
@@ -63,8 +63,8 @@ svg path.leaves {
     stop-color: #ccf5ca;
 }
 #dusk{
-    height: 100%;
-    width: 100%;
+    height: calc(var(--height) * 1px);
+    width: calc(var(--width) * 1px);
     fill: #002f5b;
     mix-blend-mode: multiply;
     opacity: 1;
@@ -83,7 +83,7 @@ body {
 }
 
 #container{
-    aspect-ratio: 5/4;
+    aspect-ratio: var(--width, 5)/var(--height(4));
     max-height: 100vh;
     margin: 0 auto;
 }

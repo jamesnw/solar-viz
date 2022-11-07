@@ -42,15 +42,6 @@
     function fetchCurrentPower() {
         return fetch('.netlify/functions/solar').then(res => res.json());
     }
-    /**
-     * makeTreesText
-     * @param {EnvBenefits} envBenefits 
-     */
-    function makeTreesText({ treesPlanted }) {
-        const el = document.getElementById('treesText');
-        const fullTrees = Math.floor(treesPlanted);
-        el.innerText = Array(fullTrees + 1).join('🌳');
-    }
     function inlineTrees(){
         const treePatterns = ['tree1', 'tree2', 'tree3'];
         treePatterns.forEach(tree=>{
@@ -86,11 +77,13 @@
     function makeTrees({ treesPlanted }) {
         const el = document.getElementById('trees');
         const fullTreeCount = Math.floor(treesPlanted);
+        const height = parseFloat(document.body.style.getPropertyValue('--height'));
+        const width = parseFloat(document.body.style.getPropertyValue('--width'));
         let fullTrees = [];
         for (let index = 0; index < fullTreeCount; index++) {
             const newTree = makeTree();
-            const x = randomIntFromInterval(-25, 950);
-            const y = randomIntFromInterval(180, 700);
+            const x = randomIntFromInterval(-25, width - 50);
+            const y = randomIntFromInterval(180, height - 100);
             const scale = .5;
             newTree.setAttribute('transform', `translate(${x}, ${y}) scale(${scale})`)
             // newTree.getElementsByClassName('translate')[0].setAttribute('transform', `translate(${x}, ${y})`)
@@ -106,37 +99,7 @@
             setTimeout(() => el.appendChild(t), delayForEach * index)
         });
     }
-    /**
-     * makeBulbsSvg
-     * @param {EnvBenefits} envBenefits 
-     */
-    function makeBulbsSvg({ lightBulbs }) {
-        const el = document.getElementById('bulbs');
-        const bulbGroup = document.getElementById('bulb-group');
-        const fullBulbs = Math.floor(lightBulbs);
-        const ratio = el.clientWidth / el.clientHeight;
 
-        let rows = Math.sqrt(fullBulbs / ratio);
-        const columns = Math.ceil(fullBulbs / rows);
-
-        rows = Math.ceil(rows);
-
-        el.setAttribute('viewBox', `0 0 ${columns * 20} ${rows * 20}`);
-
-        const offset = 20;
-        const fullRows = rows - 1;
-        const remainder = Math.floor(lightBulbs - (fullRows * (columns - 1)));
-
-        for (let index = 0; index < rows; index++) {
-            const text = makeTextElement();
-            const bulbsInRow = index === rows - 1 ? remainder + 1 : columns + 1;
-            text.textContent = Array(bulbsInRow).join('💡');
-            const y = offset * index + 15;
-            text.setAttribute('y', y.toString())
-            bulbGroup.appendChild(text);
-        }
-
-    }
     /**
      * makeOverview
      * @param {Overview} overview
@@ -165,7 +128,6 @@
         fetchSolar().then(res => {
             fullResult = res;
             makeTrees(res.envBenefits);
-            // makeBulbsSvg(res.envBenefits);
             makeOverview(res.overview);
             moveSun(res);
             document.body.classList.replace('loading', 'loaded');
@@ -179,20 +141,20 @@
             makeOverview(overview)
         });
     }
+   
+    function setDimensions(){
+        const {clientHeight, clientWidth} = document.body;
+        document.body.style.setProperty('--height', clientHeight.toString());
+        document.body.style.setProperty('--width', clientWidth.toString());
+        const landscape = document.getElementById('landscape');
+        landscape.setAttribute('viewBox', `0 0 ${clientWidth} ${clientHeight}`)
+    }
     document.addEventListener("DOMContentLoaded", function (event) {
+        setDimensions();
         inlineTrees();
         draw();
         setInterval(drawRefresh, 30000)
     });
-    /**
-     * makeTextElement
-     * @returns {SVGTextElement}
-     */
-    function makeTextElement() {
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('letter-spacing', '4px')
-        return text;
-    }
     const seasonChangeButton = document.getElementById('season-change');
     seasonChangeButton.addEventListener('click', ()=>{
         const [toggleTo, toggleFrom] = document.body.classList.contains('spring') ? ['fall', 'spring'] : ['spring', 'fall'];
