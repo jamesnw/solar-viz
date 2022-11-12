@@ -150,7 +150,7 @@
     }
 
     function drawRefresh() {
-        document.getElementById('cloudInstance').remove();
+        // document.getElementById('cloudInstance').remove();
         // makeCloud();
         fetchCurrentPower().then(({ overview }) => {
             moveSun({ details: fullResult.details, envBenefits: fullResult.envBenefits, overview });
