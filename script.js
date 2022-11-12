@@ -42,17 +42,19 @@
     function fetchCurrentPower() {
         return fetch('.netlify/functions/solar').then(res => res.json());
     }
-    function inlineTrees(){
-        const treePatterns = ['tree1', 'tree2', 'tree3'];
-        treePatterns.forEach(tree=>{
-            fetch(`assets/${tree}.svg`).then(res=>res.text()).then(res=>{
+    // Image SVGs have limitations on what CSS is applied, so inline them for full access
+    async function inlineSvgs(){
+        const treePatterns = ['tree1', 'tree2', 'tree3', 'cloud'];
+        const promises =  treePatterns.map(async tree=>{
+            return await fetch(`assets/${tree}.svg`).then(res=>res.text()).then(res=>{
                 document.getElementById(tree).innerHTML = `<g>${res}</g>`;
             });
-        })
+        });
+        return Promise.all(promises)
     }
     /**
      * makeTree
-     * @returns { SVGGElement }
+     * @returns { Node }
      */
     function makeTree() {
         const treePatterns = ['tree1', 'tree2', 'tree3'];
@@ -60,6 +62,19 @@
         const pattern = document.getElementById(patternId);
         const tree = pattern.children[0];
         return tree.cloneNode(true);
+    }
+    /**
+     * makeCloud
+     * 
+     */
+    function makeCloud() {
+        const destination = document.getElementById('clouds');
+        const pattern = document.getElementById('cloud');
+        const cloud = pattern.querySelector('.cloud').cloneNode(true);
+        cloud.setAttribute('class', 'cloud');
+        cloud.setAttribute('id', 'cloudInstance');
+        destination.appendChild(cloud);
+        setTimeout(()=>cloud.classList.add('loading'), 1);
     }
     /**
      * 
@@ -135,7 +150,8 @@
     }
 
     function drawRefresh() {
-        if(!document.hasFocus()) return;
+        document.getElementById('cloudInstance').remove();
+        // makeCloud();
         fetchCurrentPower().then(({ overview }) => {
             moveSun({ details: fullResult.details, envBenefits: fullResult.envBenefits, overview });
             makeOverview(overview)
@@ -149,12 +165,33 @@
         const landscape = document.getElementById('landscape');
         landscape.setAttribute('viewBox', `0 0 ${clientWidth} ${clientHeight}`)
     }
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener("DOMContentLoaded", async function (event) {
         setDimensions();
-        inlineTrees();
+        await inlineSvgs();
         draw();
-        setInterval(drawRefresh, 30000)
+        // makeCloud();
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+       
     });
+
+    let interval = undefined;
+    function startRefresh(){
+        drawRefresh();
+       interval = setInterval(drawRefresh, 30000)
+    }
+    function stopRefresh(){
+        clearInterval(interval);
+    }
+    function handleVisibilityChange(){
+        if(document.visibilityState === 'hidden'){
+            stopRefresh();
+        } else {
+            startRefresh();
+        }
+    }
+   
+
+
     const seasonChangeButton = document.getElementById('season-change');
     seasonChangeButton.addEventListener('click', ()=>{
         const [toggleTo, toggleFrom] = document.body.classList.contains('spring') ? ['fall', 'spring'] : ['spring', 'fall'];
